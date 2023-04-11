@@ -1,21 +1,9 @@
 function peakCoincidenceTimeDifference
 
-% Created by FMA 04.06.2023
+%this function will expect files to be in a .csv format
+% get path and files from this path ending in .csv
 
-% The purpose of this function is to separate recordings from different
-% parts of the brain (ADL or BLA). Then, within each brain region, the code
-% divides the positive and the negative peak difference values and later
-% takes the absolute value of the negative peak difference values.
-% Each brain region gets three ouptuts (one file with both positive and
-% negative peak difference values; one file with just positive peak
-% difference values; one file with the absolute value of just negative peak
-% difference values) for a total of 6 output csv files.
-
-% To use this function, please modify:
-% Line 18: the input directory containing all relevant csv files
-% Lines 76-87: the name of all the output csv files
-
-csvFiles = dir('PATH*.csv'); % this holds all our CSV files
+csvFiles = dir('C:\Users\Flo\Desktop\MiscellaneousCodingAdventures\forIsmary\here\*.csv'); % this holds all our CSV files
 
 tableForColNames = readtable(fullfile(csvFiles(1).folder, csvFiles(1).name));
 
@@ -28,7 +16,7 @@ negativeBLATable = array2table(zeros(1,size(tableForColNames,2)),'VariableNames'
 
 for csvFileIndex = 1:length({csvFiles.name})
     %look to see if ch1 or ch2
-    if contains(csvFiles(csvFileIndex).name , 'ch1', IgnoreCase = true)
+    if contains(csvFiles(csvFileIndex).name , 'ch1' ,'IgnoreCase' ,true)
         holdCurrentADLTable = readtable(fullfile(csvFiles(csvFileIndex).folder, csvFiles(csvFileIndex).name));
         finalADLTable = [finalADLTable; holdCurrentADLTable];
 
@@ -41,7 +29,7 @@ for csvFileIndex = 1:length({csvFiles.name})
             end % end if statement checking to see if you have a positive or negative value
         end % end loop going through each row in the table
 
-    elseif contains(csvFiles(csvFileIndex).name , 'ch2', IgnoreCase = true)
+    elseif contains(csvFiles(csvFileIndex).name , 'ch2' ,'IgnoreCase' ,true)
         holdCurrentBLATable = readtable(fullfile(csvFiles(csvFileIndex).folder, csvFiles(csvFileIndex).name));
         finalBLATable = [finalBLATable; holdCurrentBLATable];
 
